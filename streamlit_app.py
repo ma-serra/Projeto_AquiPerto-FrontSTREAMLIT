@@ -32,13 +32,7 @@ components.html(html_code, height=120)
 st.write("Mapa Interativo")
 st_folium(m, width=700, height=500)
 
-logo = "static/img/logo_aquiperto.png"
 
-st.markdown(
-    f"""
-    <div style="text-align: center;">
-        <img src="{logo}" alt="Logo" style="width:200px; height:auto;">
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+# Renderiza uma seção de cabeçalho personalizada usando HTML e CSS -- Home
+with open("templates/home.html", "r", encoding="utf-8") as file:
+    html_code = file.read()
