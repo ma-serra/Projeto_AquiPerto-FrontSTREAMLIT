@@ -7,6 +7,8 @@ import streamlit.components.v1 as components
 # URL do backend Flask
 api_url = "http://127.0.0.1:5000/map"
 
+st.set_page_config(initial_sidebar_state="collapsed")
+
 # Solicita os dados da API
 response = requests.get(api_url)
 markers = response.json()  # Recebe os dados em formato JSON
@@ -31,14 +33,3 @@ components.html(html_code, height=120)
 # Exibe o mapa no Streamlit
 st.write("Mapa Interativo")
 st_folium(m, width=700, height=500)
-
-logo = "static/img/logo_aquiperto.png"
-
-st.markdown(
-    f"""
-    <div style="text-align: center;">
-        <img src="{logo}" alt="Logo" style="width:200px; height:auto;">
-    </div>
-    """,
-    unsafe_allow_html=True
-)
