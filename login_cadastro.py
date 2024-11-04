@@ -1,19 +1,44 @@
 import streamlit as st
 import requests
-# import folium
-# from streamlit_folium import st_folium
-import streamlit.components.v1 as components
 
 # URL do backend Flask
-api_url = "http://127.0.0.1:5000/login"
+API_URL = "http://localhost:5000"  # Altere para o endereço correto do seu backend
 
-# Solicita os dados da API
-response = requests.get(api_url)
-# markers = response.json()  # Recebe os dados em formato JSON
+def main():
+    st.title("Aplicativo de Login")
 
-# Renderiza uma seção de cabeçalho personalizada usando HTML e CSS
-with open("templates/login.html", "r", encoding="utf-8") as file:
-    html_code = file.read()
+    menu = ["Login"]
+    choice = st.sidebar.selectbox("Menu", menu)
 
-components.html(html_code, height=500)
+    if choice == "Login":
+        st.subheader("Login")
 
+        email = st.text_input("Email")
+        senha = st.text_input("Senha", type='password')
+
+        if st.button("Entrar"):
+            if email and senha:
+                data = {'email': email, 'senha': senha}
+                try:
+                    response = requests.post(f"{API_URL}/login", json=data)
+                    if response.status_code == 200:
+                        st.success("Login realizado com sucesso!")
+                        st.session_state['logged_in'] = True
+                        st.session_state['user_email'] = email
+                    else:
+                        error_message = response.json().get('erro', 'Erro desconhecido.')
+                        st.error(f"Erro no login: {error_message}")
+                except Exception as e:
+                    st.error(f"Erro ao conectar com o servidor: {e}")
+            else:
+                st.warning("Por favor, preencha todos os campos.")
+
+    # Área após login
+    if 'logged_in' in st.session_state and st.session_state['logged_in']:
+        st.sidebar.success(f"Logado como: {st.session_state['user_email']}")
+        if st.button("Sair"):
+            st.session_state.clear()
+            st.experimental_rerun()
+
+if __name__ == '__main__':
+    main()
