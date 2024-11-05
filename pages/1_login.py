@@ -1,8 +1,9 @@
 import streamlit as st
 import requests
+from time import sleep
 
 # URL do backend Flask
-API_URL = "http://localhost:5000"  # Altere para o endereço correto do seu backend
+API_URL = "http://localhost:5000"
 
 st.logo(image="img/logo.png", size="large")
 
@@ -30,9 +31,6 @@ if st.button("Entrar"):
 
 # Área após login
 if 'logged_in' in st.session_state and st.session_state['logged_in']:
+    sleep(1.3)
     st.switch_page("home.py")
 
-# st.sidebar.success(f"Logado como: {st.session_state['user_email']}")
-# if st.button("Sair"):
-#     st.session_state.clear()
-#     st.experimental_rerun()
