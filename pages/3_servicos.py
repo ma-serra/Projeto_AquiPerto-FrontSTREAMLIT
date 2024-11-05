@@ -17,6 +17,13 @@ shopping_centers = [dicio for dicio in locais["locais"] if dicio["tipo"] == "Sho
 estacionamentos = [dicio for dicio in locais["locais"] if dicio["tipo"] == "Estacionamento"]
 restaurantes = [dicio for dicio in locais["locais"] if dicio["tipo"] == "Restaurante"]
 
+sidebar_logo = "img/logo_aqui_perto.png"
+main_body_logo = "img/casa_logoaquiperto.png"
+
+st.logo(sidebar_logo, icon_image=main_body_logo)
+st.sidebar.markdown("Olá!")
+
+
 # Menu de navegação
 with st.sidebar:
     selected = option_menu("Menu", ["Supermercados", "Farmácias", "Shopping center", "Estacionamentos", "Restaurantes"], 
