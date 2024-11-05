@@ -67,7 +67,7 @@
         </form>
         <div class="message" id="message"></div>
     </div>
-
+{% comment %} 
     <script>
         function handleSubmit(event) {
             event.preventDefault(); // Impede o comportamento padrão do formulário
@@ -78,6 +78,6 @@
             const data = {email: email, senha: senha};
             Streamlit.setComponentValue(data);
         }
-    </script>
+    </script> {% endcomment %}
 </body>
 </html>
