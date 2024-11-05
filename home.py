@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import streamlit.components.v1 as components
 
 api_url = "http://127.0.0.1:5000/home"
 

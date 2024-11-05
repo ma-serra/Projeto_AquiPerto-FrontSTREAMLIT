@@ -5,7 +5,7 @@ from streamlit_folium import st_folium
 import streamlit.components.v1 as components
 
 # URL do backend Flask
-api_url = "http://127.0.0.1:5000/map"
+api_url = "http://127.0.0.1:5000/mapa"
 
 st.set_page_config(initial_sidebar_state="collapsed")
 
