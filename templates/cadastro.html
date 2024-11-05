@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Página de Cadastro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        header {
+            background-color: #004aad;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            margin: 50px auto;
+            width: 400px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-bottom: 30px;
+            color: #333;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #004aad;
+            color: white;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #003b8e;
+        }
+
+        .link-login {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .link-login a {
+            color: #004aad;
+            text-decoration: none;
+        }
+
+        .link-login a:hover {
+            text-decoration: underline;
+        }
+
+        .message {
+            text-align: center;
+            margin-bottom: 15px;
+            color: red;
+        }
+
+        @media screen and (max-width: 480px) {
+            main {
+                width: 90%;
+                margin: 20px auto;
+            }
+        }
+    </style>
+    <script>
+        async function handleSubmit(event) {
+            event.preventDefault(); // Evita o envio padrão do formulário
+
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            const confirmarSenha = document.getElementById('confirmar-senha').value;
+            const messageDiv = document.getElementById('message');
+
+            if (!nome || !email || !senha || !confirmarSenha) {
+                messageDiv.textContent = "Por favor, preencha todos os campos.";
+                return;
+            }
+
+            if (senha !== confirmarSenha) {
+                messageDiv.textContent = "As senhas não coincidem.";
+                return;
+            }
+
+            const data = { nome, email, senha };
+
+            try {
+                const response = await fetch('http://localhost:5000/usuarios', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.status === 201) {
+                    messageDiv.style.color = "green";
+                    messageDiv.textContent = "Cadastro realizado com sucesso! Por favor, faça login.";
+                    // Redirecionar para a página de login após o cadastro ?????????????????
+                    // window.location.href = "/login";
+                } else {
+                    messageDiv.style.color = "red";
+                    messageDiv.textContent = `Erro no cadastro: ${result.erro}`;
+                }
+            } catch (error) {
+                messageDiv.style.color = "red";
+                messageDiv.textContent = `Erro ao conectar com o servidor: ${error}`;
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Nome da Empresa</h1>
+    </header>
+    <main>
+        <h2>Cadastro</h2>
+        <div id="message" class="message"></div>
+        <form onsubmit="handleSubmit(event)">
+            <label for="nome">Nome Completo</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" required>
+
+            <label for="confirmar-senha">Confirmar Senha</label>
+            <input type="password" id="confirmar-senha" name="confirmar-senha" required>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+        <div class="link-login">
+            <p>Já tem uma conta? <a href="/login.html">Faça login aqui</a></p>
+        </div>
+    </main>
+</body>
+</html>
