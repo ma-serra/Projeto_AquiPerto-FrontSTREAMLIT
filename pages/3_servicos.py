@@ -42,6 +42,7 @@ if selected == "Supermercados":
             <h3>{dicio["nome"]}</h3>
             <p><strong>Endereço:</strong> {dicio["endereco"]}</p>
             <p><strong>Telefone:</strong> {dicio["telefone"]}</p>
+            <img src="{dicio["imagem"]}" style="width: 100%; border-radius: 10px;">
             <hr>
         """, unsafe_allow_html=True)
 
@@ -58,6 +59,7 @@ elif selected == "Farmácias":
             <h3>{dicio["nome"]}</h3>
             <p><strong>Endereço:</strong> {dicio["endereco"]}</p>
             <p><strong>Telefone:</strong> {dicio["telefone"]}</p>
+            <img src="{dicio["imagem"]}" style="width: 100%; border-radius: 10px;">
             <hr>
         """, unsafe_allow_html=True)
 
@@ -74,6 +76,7 @@ elif selected == "Shopping center":
             <h3>{dicio["nome"]}</h3>
             <p><strong>Endereço:</strong> {dicio["endereco"]}</p>
             <p><strong>Telefone:</strong> {dicio["telefone"]}</p>
+            <img src="{dicio["imagem"]}" style="width: 100%; border-radius: 10px;">
             <hr>
         """, unsafe_allow_html=True)
 
@@ -90,6 +93,7 @@ elif selected == "Estacionamentos":
             <h3>{dicio["nome"]}</h3>
             <p><strong>Endereço:</strong> {dicio["endereco"]}</p>
             <p><strong>Telefone:</strong> {dicio["telefone"]}</p>
+            <img src="{dicio["imagem"]}" style="width: 100%; border-radius: 10px;">
             <hr>
         """, unsafe_allow_html=True)
 
@@ -106,5 +110,6 @@ elif selected == "Restaurantes":
             <h3>{dicio["nome"]}</h3>
             <p><strong>Endereço:</strong> {dicio["endereco"]}</p>
             <p><strong>Telefone:</strong> {dicio["telefone"]}</p>
+            <img src="{dicio["imagem"]}" style="width: 100%; border-radius: 10px;">
             <hr>
         """, unsafe_allow_html=True)
