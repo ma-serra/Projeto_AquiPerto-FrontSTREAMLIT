@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 import streamlit.components.v1 as components
 
-api_url = "http://127.0.0.1:5000/home"
+# api_url = "http://127.0.0.1:5000"
 
 # Código da home page aqui
 
@@ -16,16 +16,16 @@ def carregar_conteudo_api(url):
         return {}
 
 # Carrega o conteúdo da API
-conteudo = carregar_conteudo_api(api_url)
+# conteudo = carregar_conteudo_api(api_url)
 
 # Título da página
 st.title("Bem-vindo à Nossa Plataforma")
 
 # Exibe uma mensagem da API ou um texto padrão
-if conteudo:
-    st.write(conteudo.get('message', 'Página inicial'))
-else:
-    st.write("Bem-vindo! Use os botões abaixo para navegar.")
+# if conteudo:
+#     st.write(conteudo.get('message', 'Página inicial'))
+# else:
+#     st.write("Bem-vindo! Use os botões abaixo para navegar.")
 
 # Espaçamento
 st.markdown("<br>", unsafe_allow_html=True)
