@@ -5,6 +5,7 @@ from pages.cadastro import cadastro_page
 from pages.home import home_page
 from pages.servicos import servicos_page
 from pages.mapa import mapa_page
+from pages.favoritos import favoritos_page
 
 def main():
     # Configuração da página (deve ser o primeiro comando Streamlit)
@@ -41,6 +42,9 @@ def main():
             if st.button("Mapa", key="sidebar_mapa"):
                 st.session_state.page = 'mapa'
                 st.rerun()
+            if st.button("Favoritos", key="sidebar_favoritos"):
+                st.session_state.page = 'favoritos'
+                st.rerun()
             if st.button("Logout", key="sidebar_logout"):
                 st.session_state.user_email = None
                 st.session_state.page = 'inicio'
@@ -60,6 +64,8 @@ def main():
         servicos_page()
     elif st.session_state.page == "mapa":
         mapa_page()
+    elif st.session_state.page == "favoritos":
+        favoritos_page()
     else:
         st.error("Página não encontrada.")
         st.session_state.page = 'inicio'
