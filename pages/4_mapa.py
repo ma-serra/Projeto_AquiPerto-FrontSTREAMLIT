@@ -24,6 +24,10 @@ for marker in markers:
         tooltip=marker["name"]
     ).add_to(m)
 
+folium.plugins.LocateControl().add_to(m)
+
+folium.plugins.LocateControl(auto_start=True).add_to(m)
+
 # Renderiza uma seção de cabeçalho personalizada usando HTML e CSS
 with open("templates/map.html", "r", encoding="utf-8") as file:
     html_code = file.read()
