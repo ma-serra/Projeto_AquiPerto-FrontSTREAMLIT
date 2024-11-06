@@ -4,20 +4,15 @@ import base64
 from utils import initialize_session
 
 def home_page():
-    # Initialize session state
+
     initialize_session()
 
-    # Verify if the user is logged in
     if st.session_state.user_email is None:
         st.warning("Você precisa estar logado para acessar esta página.")
         st.session_state.page = 'login'
         st.rerun()
         return
 
-    # Display welcome message with user's email
-    st.write(f"Bem-vindo, {st.session_state.get('user_email', 'usuário')}!")
-
-    # Function to encode image in base64 for HTML display
     def encode_image(image_path):
         try:
             with open(image_path, "rb") as image_file:
@@ -27,7 +22,6 @@ def home_page():
             st.error("Logo não encontrada.")
             return ""
 
-    # Function to display the centered logo with adjustable margins
     def display_centered_logo(image_path, width=200, top_margin="-200px", bottom_margin="-200px"):
         encoded_image = encode_image(image_path)
         if encoded_image:
@@ -40,11 +34,9 @@ def home_page():
                 unsafe_allow_html=True
             )
 
-    # Center the logo in the main area
     logo_path = 'img/logo_aqui_perto.png'
     display_centered_logo(logo_path, width=200)
 
-    # Load and display the Home page content
     try:
         with open("templates/home.html", "r", encoding="utf-8") as file:
             html_code = file.read()

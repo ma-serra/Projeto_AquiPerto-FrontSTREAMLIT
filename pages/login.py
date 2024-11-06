@@ -3,7 +3,7 @@ import requests
 from utils import initialize_session
 
 def login_page():
-    # Initialize session state
+
     initialize_session()
 
     st.title("Login")

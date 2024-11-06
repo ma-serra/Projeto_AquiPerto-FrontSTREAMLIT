@@ -8,21 +8,40 @@ from pages.mapa import mapa_page
 from pages.favoritos import favoritos_page
 
 def main():
-    # Configuração da página (deve ser o primeiro comando Streamlit)
     st.set_page_config(page_title="Aqui Perto", page_icon="🏠", layout="centered")
-
-    # Inicialização do estado de sessão
     initialize_session()
-
-    # Inicializa a página atual no session_state
     if 'page' not in st.session_state:
         st.session_state.page = 'inicio'
 
-    # Adiciona botões de navegação na sidebar
+    st.markdown("""
+    <style>
+    /* Estilo para os botões na barra lateral */
+    [data-testid="stSidebar"] .stButton > button {
+        background-color: #333333;
+        color: #ffffff !important; /* Garante que o texto seja sempre branco */
+        width: 100%;
+        height: 40px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        margin: 5px 0;
+    }
+
+    /* Estilo para o estado hover dos botões na barra lateral */
+    [data-testid="stSidebar"] .stButton > button:hover {
+        background-color: #555555;
+        color: #ffffff !important; /* Garante que o texto permaneça branco ao passar o mouse */
+    }
+
+    /* Garante que todos os elementos internos do botão também tenham texto branco */
+    [data-testid="stSidebar"] .stButton > button * {
+        color: #ffffff !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     with st.sidebar:
         st.title("Menu de Navegação")
-
-        # Se o usuário não estiver logado, mostrar opções de Login e Cadastro
         if st.session_state.user_email is None:
             if st.button("Login", key="sidebar_login"):
                 st.session_state.page = 'login'
@@ -31,7 +50,6 @@ def main():
                 st.session_state.page = 'cadastro'
                 st.rerun()
         else:
-            # Se o usuário estiver logado, mostrar opções de navegação e Logout
             st.write(f"Usuário: {st.session_state.user_email}")
             if st.button("Home", key="sidebar_home"):
                 st.session_state.page = 'home'
@@ -50,23 +68,35 @@ def main():
                 st.session_state.page = 'inicio'
                 st.rerun()
 
-    # Condicional para exibir conteúdo baseado na página atual
+    # Função para exibir a logo centralizada
+    def exibir_logo():
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            st.image("img/logo_aqui_perto.png", width=200)
+
     if st.session_state.page == "inicio":
+        exibir_logo()
         st.title("Bem-vindo ao Aqui Perto")
         st.write("Selecione uma opção no menu lateral.")
+
     elif st.session_state.page == "login":
+        exibir_logo()
         login_page()
     elif st.session_state.page == "cadastro":
+        exibir_logo()
         cadastro_page()
     elif st.session_state.page == "home":
         home_page()
     elif st.session_state.page == "servicos":
         servicos_page()
     elif st.session_state.page == "mapa":
+        exibir_logo()
         mapa_page()
     elif st.session_state.page == "favoritos":
+        exibir_logo()
         favoritos_page()
     else:
+        exibir_logo()
         st.error("Página não encontrada.")
         st.session_state.page = 'inicio'
 

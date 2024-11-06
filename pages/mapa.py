@@ -7,10 +7,9 @@ from folium.plugins import LocateControl, MeasureControl
 from utils import initialize_session
 
 def mapa_page():
-    # Initialize session state
+
     initialize_session()
     
-    # Verify if the user is logged in
     if st.session_state.user_email is None:
         st.warning("Você precisa estar logado para acessar esta página.")
         st.session_state.page = 'login'
@@ -40,7 +39,6 @@ def mapa_page():
     LocateControl(auto_start=True).add_to(m)
     m.add_child(MeasureControl())
 
-    # Renderiza uma seção de cabeçalho personalizada usando HTML e CSS
     try:
         with open("templates/map.html", "r", encoding="utf-8") as file:
             html_code = file.read()

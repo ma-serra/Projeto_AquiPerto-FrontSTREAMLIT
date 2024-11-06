@@ -1,11 +1,9 @@
-# pages/cadastro.py
-
 import streamlit as st
 import requests
 from utils import initialize_session
 
 def cadastro_page():
-    # Initialize session state
+
     initialize_session()
 
     st.title("Cadastro")
@@ -19,11 +17,10 @@ def cadastro_page():
             data = {'nome': nome, 'email': email, 'senha': senha}
             try:
                 response = requests.post("http://localhost:5000/usuarios", json=data)
-                # Check if the response is successful
                 if response.status_code == 201:
                     st.success("Cadastro realizado com sucesso! Você pode agora fazer login.")
-                    st.session_state.page = 'login'  # Redirect to login.py
-                    st.experimental_rerun()  # Reload the app to update the page
+                    st.session_state.page = 'login'  # Redireciona para a página de login
+                    st.rerun()
                     return
                 else:
                     error_message = response.json().get('erro', 'Erro desconhecido.')
