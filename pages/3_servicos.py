@@ -42,6 +42,7 @@ if selected == "Supermercados":
             <h3>{dicio["nome"]}</h3>
             <p><strong>Endereço:</strong> {dicio["endereco"]}</p>
             <p><strong>Telefone:</strong> {dicio["telefone"]}</p>
+            <p><strong>Avaliação:</strong> {dicio["avaliacao"]}⭐</p>
             <img src="{dicio["imagem"]}" style="width: 100%; border-radius: 10px;">
             <hr>
         """, unsafe_allow_html=True)
@@ -59,6 +60,7 @@ elif selected == "Farmácias":
             <h3>{dicio["nome"]}</h3>
             <p><strong>Endereço:</strong> {dicio["endereco"]}</p>
             <p><strong>Telefone:</strong> {dicio["telefone"]}</p>
+            <p><strong>Avaliação:</strong> {dicio["avaliacao"]}⭐</p>
             <img src="{dicio["imagem"]}" style="width: 100%; border-radius: 10px;">
             <hr>
         """, unsafe_allow_html=True)
@@ -76,6 +78,7 @@ elif selected == "Shopping center":
             <h3>{dicio["nome"]}</h3>
             <p><strong>Endereço:</strong> {dicio["endereco"]}</p>
             <p><strong>Telefone:</strong> {dicio["telefone"]}</p>
+            <p><strong>Avaliação:</strong> {dicio["avaliacao"]}⭐</p>
             <img src="{dicio["imagem"]}" style="width: 100%; border-radius: 10px;">
             <hr>
         """, unsafe_allow_html=True)
@@ -93,6 +96,7 @@ elif selected == "Estacionamentos":
             <h3>{dicio["nome"]}</h3>
             <p><strong>Endereço:</strong> {dicio["endereco"]}</p>
             <p><strong>Telefone:</strong> {dicio["telefone"]}</p>
+            <p><strong>Avaliação:</strong> {dicio["avaliacao"]}⭐</p>
             <img src="{dicio["imagem"]}" style="width: 100%; border-radius: 10px;">
             <hr>
         """, unsafe_allow_html=True)
@@ -110,6 +114,7 @@ elif selected == "Restaurantes":
             <h3>{dicio["nome"]}</h3>
             <p><strong>Endereço:</strong> {dicio["endereco"]}</p>
             <p><strong>Telefone:</strong> {dicio["telefone"]}</p>
+            <p><strong>Avaliação:</strong> {dicio["avaliacao"]}⭐</p>
             <img src="{dicio["imagem"]}" style="width: 100%; border-radius: 10px;">
             <hr>
         """, unsafe_allow_html=True)
@@ -257,31 +262,31 @@ def botoes_sidebar2():
     """, unsafe_allow_html=True)
     
     # Obter o valor de 'selected' dos parâmetros da URL
-    query_params = st.experimental_get_query_params()
-    selected = query_params.get('selected', ['Supermercados'])[0]  # Padrão para 'Supermercados' se não definido
+    # query_params = st.experimental_get_query_params()
+    # selected = query_params.get('selected', ['Supermercados'])[0]  # Padrão para 'Supermercados' se não definido
     
     # Lista de opções
     options = ["Supermercados", "Farmácias", "Shopping center", "Estacionamentos", "Restaurantes"]
     
     # Ícones correspondentes (opcional: ajuste conforme necessário)
-    icons = {
-        "Supermercados": "🛒",
-        "Farmácias": "💊",
-        "Shopping center": "🏬",
-        "Estacionamentos": "🚗",
-        "Restaurantes": "🍽️"
-    }
+    # icons = {
+    #     "Supermercados": "🛒",
+    #     "Farmácias": "💊",
+    #     "Shopping center": "🏬",
+    #     "Estacionamentos": "🚗",
+    #     "Restaurantes": "🍽️"
+    # }
     
     # Criar botões
-    st.sidebar.markdown("<div class='section-title'>Categorias</div>", unsafe_allow_html=True)
-    for option in options:
-        active_class = 'active' if selected == option else ''
-        # URL encode para evitar problemas com espaços
-        option_encoded = option.replace(" ", "%20")
-        st.sidebar.markdown(
-            f"<a href='?selected={option_encoded}' class='sidebar-button {active_class}'><span>{icons.get(option, '')} {option}</span></a>",
-            unsafe_allow_html=True
-        )
+    # st.sidebar.markdown("<div class='section-title'>Categorias</div>", unsafe_allow_html=True)
+    # for option in options:
+    #     active_class = 'active' if selected == option else ''
+    #     # URL encode para evitar problemas com espaços
+    #     option_encoded = option.replace(" ", "%20")
+    #     st.sidebar.markdown(
+    #         f"<a href='?selected={option_encoded}' class='sidebar-button {active_class}'><span>{icons.get(option, '')} {option}</span></a>",
+    #         unsafe_allow_html=True
+    #     )
     
     return selected
 
