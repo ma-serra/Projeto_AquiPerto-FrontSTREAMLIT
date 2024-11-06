@@ -1,45 +1,61 @@
 import streamlit as st
-import requests
 import streamlit.components.v1 as components
 import os
+import base64
 
-def center_logo_and_buttons():
-    # Cria três colunas para centralizar o conteúdo na coluna do meio
-    col1, col2, col3 = st.columns([1, 2, 1])
+# Configuração da página
+st.set_page_config(page_title="Home", page_icon="🏠", layout="wide")
 
-    with col2:
-        # Exibir a logo se o arquivo existir
-        if os.path.exists('img/logo_aqui_perto.png'):
-            st.image('img/logo_aqui_perto.png', width=200)
-        else:
-            st.write('Logo não encontrada.')
+# Função para codificar a imagem em base64 para exibição no HTML
+def encode_image(image_path):
+    with open(image_path, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode()
+    return encoded_string
 
-        # Espaçamento
-        st.write("")
+# Função para centralizar a logo usando HTML e CSS
+def display_centered_logo(image_path, width=200):
+    if os.path.exists(image_path):
+        st.markdown(
+            f"""
+            <div style="display: flex; justify-content: center; align-items: center; height: 60vh;">
+                <img src="data:image/png;base64,{encode_image(image_path)}" width="{width}">
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+    else:
+        st.error("Logo não encontrada.")
 
-        # Verificar se o usuário está logado
-        if 'logged_in' in st.session_state and st.session_state['logged_in']:
-            # Usuário está logado
-            st.write(f"Bem-vindo, {st.session_state.get('user_email', '')}!")
+# Sidebar com botões de Login/Cadastro ou Sair
+with st.sidebar:
+    st.markdown("# Navegação")
+    st.markdown("---")  # Linha separadora
 
-            if st.button("Sair"):
-                st.session_state.clear()
-                # Redirecionar para a Home após logout
-                st.markdown("<meta http-equiv='refresh' content='0; url=/' />", unsafe_allow_html=True)
-        else:
-            # Usuário não está logado, exibir botões de Login e Cadastro
-            if st.button('Login'):
-                # Redirecionar para a página de login
-                st.markdown("<meta http-equiv='refresh' content='0; url=/login' />", unsafe_allow_html=True)
-            if st.button('Cadastro'):
-                # Redirecionar para a página de cadastro
-                st.markdown("<meta http-equiv='refresh' content='0; url=/cadastro' />", unsafe_allow_html=True)
+    # Verificar se o usuário está logado
+    if st.session_state.get('logged_in'):
+        st.write(f"### Bem-vindo, {st.session_state.get('user_email', '')}!")
+        if st.button("Sair"):
+            st.session_state.clear()
+            st.success("Você saiu com sucesso.")
+            st.set_query_params()  # Limpar parâmetros da URL
+            st.experimental_rerun()
+    else:
+        st.write("### Acesse sua conta")
+        if st.button('Login'):
+            st.set_query_params(page='login')
+            st.experimental_rerun()
+        if st.button('Cadastro'):
+            st.set_query_params(page='cadastro')
+            st.experimental_rerun()
 
-# Centralizar a logo e os botões
-center_logo_and_buttons()
+# Centralizar a logo na área principal
+logo_path = 'img/logo_aqui_perto.png'
+display_centered_logo(logo_path, width=200)
 
 # Carregar e exibir o conteúdo da página Home
-with open("templates/home.html", "r", encoding="utf-8") as file:
-    html_code = file.read()
-
-components.html(html_code, width=None, height=1025, scrolling=False)
+try:
+    with open("templates/home.html", "r", encoding="utf-8") as file:
+        html_code = file.read()
+    components.html(html_code, width=None, height=1025, scrolling=False)
+except FileNotFoundError:
+    st.error("O arquivo 'home.html' não foi encontrado na pasta 'templates'.")
