@@ -3,30 +3,41 @@ import requests
 import folium
 from streamlit_folium import st_folium
 import streamlit.components.v1 as components
+from folium.plugins import LocateControl, MeasureControl, BeautifyIcon
 
-# URL do backend Flask
-api_url = "http://127.0.0.1:5000/mapa"
+api_url = "http://127.0.0.1:5000/locais"
 
 st.set_page_config(initial_sidebar_state="collapsed")
 
-# Solicita os dados da API
 response = requests.get(api_url)
-markers = response.json()  # Recebe os dados em formato JSON
+markers_data = response.json()
 
-# Cria o mapa centrado em uma das localizações, por exemplo, São Paulo
 m = folium.Map(location=[-23.5986884,-46.6765147], zoom_start=15)
 
-# Adiciona marcadores com os dados da API
+if 'locais' in markers_data:
+    markers = markers_data['locais']
+else:
+    markers = []
+    st.error("Erro: A resposta da API não contém dados de locais.")
+
+# restaurant_icon = BeautifyIcon(icon="utensils")
+# check_icon = BeautifyIcon(icon="check")
+
 for marker in markers:
+    # if marker['tipo'] == "restaurante":
+    #     marker_icon = restaurant_icon
+    # else:
+    #     marker_icon = check_icon
     folium.Marker(
-        [marker["lat"], marker["lon"]],
-        popup=marker["info"],
-        tooltip=marker["name"]
+        [marker['latitude'], marker['longitude']],
+        popup=marker["tipo"],
+        # icon= restaurant_icon,
+        tooltip=marker["nome"]
     ).add_to(m)
 
-folium.plugins.LocateControl().add_to(m)
+LocateControl(auto_start=True).add_to(m)
 
-folium.plugins.LocateControl(auto_start=True).add_to(m)
+m.add_child(MeasureControl())
 
 # Renderiza uma seção de cabeçalho personalizada usando HTML e CSS
 with open("templates/map.html", "r", encoding="utf-8") as file:
