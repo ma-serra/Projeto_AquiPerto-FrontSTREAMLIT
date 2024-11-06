@@ -1,5 +1,3 @@
-# pages/login.py
-
 import streamlit as st
 import requests
 from utils import initialize_session
@@ -18,12 +16,11 @@ def login_page():
             data = {'email': email, 'senha': senha}
             try:
                 response = requests.post("http://localhost:5000/login", json=data)
-                # Check if the response is successful
                 if response.status_code == 200:
                     st.success("Login realizado com sucesso!")
                     st.session_state['user_email'] = email
-                    st.session_state.page = 'home'  # Redirect to home.py
-                    st.rerun()  # Reload the app to update the page
+                    st.session_state.page = 'home'
+                    st.rerun()
                     return
                 else:
                     error_message = response.json().get('erro', 'Erro desconhecido.')

@@ -1,12 +1,10 @@
-# app.py
-
 import streamlit as st
 from utils import initialize_session
 from pages.login import login_page
 from pages.cadastro import cadastro_page
 from pages.home import home_page
 from pages.servicos import servicos_page
-# Importar outras páginas conforme necessário
+from pages.mapa import mapa_page
 
 def main():
     # Configuração da página (deve ser o primeiro comando Streamlit)
@@ -40,6 +38,9 @@ def main():
             if st.button("Serviços", key="sidebar_servicos"):
                 st.session_state.page = 'servicos'
                 st.rerun()
+            if st.button("Mapa", key="sidebar_mapa"):
+                st.session_state.page = 'mapa'
+                st.rerun()
             if st.button("Logout", key="sidebar_logout"):
                 st.session_state.user_email = None
                 st.session_state.page = 'inicio'
@@ -57,7 +58,8 @@ def main():
         home_page()
     elif st.session_state.page == "servicos":
         servicos_page()
-    # Incluir outras páginas conforme necessário
+    elif st.session_state.page == "mapa":
+        mapa_page()
     else:
         st.error("Página não encontrada.")
         st.session_state.page = 'inicio'

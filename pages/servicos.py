@@ -1,5 +1,3 @@
-# pages/servicos.py
-
 import streamlit as st
 from utils import initialize_session
 import requests
@@ -30,7 +28,7 @@ def servicos_page():
     # Carregar os dados dos locais
     locais = carregar_dados()
     if locais is None:
-        return  # Interrompe a execução se não for possível carregar os dados
+        return
 
     # Separar os locais por tipo
     tipos = ["Supermercado", "Farmácia", "Shopping center", "Estacionamento", "Restaurante"]

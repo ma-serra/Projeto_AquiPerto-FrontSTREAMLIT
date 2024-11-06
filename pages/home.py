@@ -1,8 +1,5 @@
-# pages/home.py
-
 import streamlit as st
 import streamlit.components.v1 as components
-import os
 import base64
 from utils import initialize_session
 
@@ -14,8 +11,11 @@ def home_page():
     if st.session_state.user_email is None:
         st.warning("Você precisa estar logado para acessar esta página.")
         st.session_state.page = 'login'
-        st.rerun()  # Reload the app to update the page
+        st.rerun()
         return
+
+    # Display welcome message with user's email
+    st.write(f"Bem-vindo, {st.session_state.get('user_email', 'usuário')}!")
 
     # Function to encode image in base64 for HTML display
     def encode_image(image_path):
@@ -39,9 +39,6 @@ def home_page():
                 """,
                 unsafe_allow_html=True
             )
-
-    # Display welcome message with user's email
-    st.write(f"Bem-vindo, {st.session_state.get('user_email', 'usuário')}!")
 
     # Center the logo in the main area
     logo_path = 'img/logo_aqui_perto.png'
