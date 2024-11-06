@@ -1,33 +1,16 @@
 import streamlit as st
 
-# Lista de favoritos
-favoritos = st.session_state.get("favoritos", [])
+# Inicializar a lista de favoritos na sessão
+if "favoritos" not in st.session_state:
+    st.session_state["favoritos"] = []
 
 # Função para adicionar ou remover o local dos favoritos
 def toggle_favorito(local):
-    if local in favoritos:
-        favoritos.remove(local)
-        st.session_state["favoritos"] = favoritos
+    if local in st.session_state["favoritos"]:
+        st.session_state["favoritos"].remove(local)
         st.success(f"{local} foi removido dos favoritos!")
     else:
-        favoritos.append(local)
-        st.session_state["favoritos"] = favoritos
-        st.success(f"{local} foi adicionado aos favoritos!")
-
-import streamlit as st
-
-# Lista de favoritos
-favoritos = st.session_state.get("favoritos", [])
-
-# Função para adicionar ou remover o local dos favoritos
-def favoritar(local):
-    if local in favoritos:
-        favoritos.remove(local)
-        st.session_state["favoritos"] = favoritos
-        st.success(f"{local} foi removido dos favoritos!")
-    else:
-        favoritos.append(local)
-        st.session_state["favoritos"] = favoritos
+        st.session_state["favoritos"].append(local)
         st.success(f"{local} foi adicionado aos favoritos!")
 
 # Estilização em CSS
@@ -62,6 +45,11 @@ st.markdown(
             font-size: 18px;
             display: inline-flex;
             align-items: center;
+        }
+        nav a img {
+            width: 16px; /* Tamanho da imagem de lupa ajustado */
+            height: auto;
+            vertical-align: middle;
         }
         .intro {
             text-align: center;
@@ -142,7 +130,7 @@ st.markdown(
 )
 
 # Exibir cards dos locais populares
-locais = ["Big Big", "Shopping Vila Olímpia", "Pão de açucar"]
+locais = ["Restaurante A", "Shopping B", "Supermercado C"]
 for local in locais:
     with st.container():
         st.markdown(
@@ -156,7 +144,7 @@ for local in locais:
         )
         
         # Determinar o símbolo da estrela (favoritado ou não)
-        if local in favoritos:
+        if local in st.session_state["favoritos"]:
             estrela = "⭐ Remover dos favoritos"
         else:
             estrela = "☆ Adicionar aos favoritos"
@@ -176,7 +164,7 @@ st.markdown(
 
 # Exibir favoritos ao final da página
 if st.button("Ver Favoritos"):
-    if favoritos:
-        st.write("Favoritos:", favoritos)
+    if st.session_state["favoritos"]:
+        st.write("Favoritos:", st.session_state["favoritos"])
     else:
         st.write("Nenhum local adicionado aos favoritos.")
