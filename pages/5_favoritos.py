@@ -1,34 +1,89 @@
 import streamlit as st
 
-# Lista de favoritos
-favoritos = st.session_state.get("favoritos", [])
+# Inicializar a lista de favoritos na sessão
+if "favoritos" not in st.session_state:
+    st.session_state["favoritos"] = []
 
 # Função para adicionar ou remover o local dos favoritos
 def toggle_favorito(local):
-    if local in favoritos:
-        favoritos.remove(local)
-        st.session_state["favoritos"] = favoritos
+    if local in st.session_state["favoritos"]:
+        st.session_state["favoritos"].remove(local)
         st.success(f"{local} foi removido dos favoritos!")
     else:
-        favoritos.append(local)
-        st.session_state["favoritos"] = favoritos
+        st.session_state["favoritos"].append(local)
         st.success(f"{local} foi adicionado aos favoritos!")
 
-import streamlit as st
+def botoes_sidebar():
+    # Estilização CSS para os botões e títulos das seções
+    st.sidebar.markdown("""
+    <style>
+    /* Estilo para os títulos das seções */
+    .section-title {
+        font-size: 18px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        color: #333333;
+        font-weight: bold;
+    }
+    
+    /* Estilo para os botões da sidebar */
+    a.sidebar-button {
+        display: block;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        font-size: 16px;
+        font-family: sans-serif;
+        text-decoration: none;
+        color: #333;
+        border: 2px solid #333;
+        letter-spacing: 1px;
+        text-align: center;
+        position: relative;
+        transition: all 0.35s;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+    
+    a.sidebar-button span {
+        position: relative;
+        z-index: 2;
+    }
+    
+    a.sidebar-button:after {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 100%;
+        background: #333;
+        transition: all 0.35s;
+        border-radius: 5px;
+    }
+    
+    a.sidebar-button:hover {
+        color: #fff;
+    }
+    
+    a.sidebar-button:hover:after {
+        width: 100%;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    # Primeira seção: Acesso (Login e Cadastro)
+    st.sidebar.markdown("<div class='section-title'>Acesso</div>", unsafe_allow_html=True)
+    st.sidebar.markdown("<a href='/login' class='sidebar-button'><span>Login</span></a>", unsafe_allow_html=True)
+    st.sidebar.markdown("<a href='/cadastro' class='sidebar-button'><span>Cadastro</span></a>", unsafe_allow_html=True)
+    
+    # Segunda seção: Navegação (Home, Serviços, Favoritos, Mapa)
+    st.sidebar.markdown("<div class='section-title'>Navegação</div>", unsafe_allow_html=True)
+    st.sidebar.markdown("<a href='/' class='sidebar-button'><span>Home</span></a>", unsafe_allow_html=True)
+    st.sidebar.markdown("<a href='/servicos' class='sidebar-button'><span>Serviços</span></a>", unsafe_allow_html=True)
+    st.sidebar.markdown("<a href='/mapa' class='sidebar-button'><span>Mapa</span></a>", unsafe_allow_html=True)
 
-# Lista de favoritos
-favoritos = st.session_state.get("favoritos", [])
-
-# Função para adicionar ou remover o local dos favoritos
-def favoritar(local):
-    if local in favoritos:
-        favoritos.remove(local)
-        st.session_state["favoritos"] = favoritos
-        st.success(f"{local} foi removido dos favoritos!")
-    else:
-        favoritos.append(local)
-        st.session_state["favoritos"] = favoritos
-        st.success(f"{local} foi adicionado aos favoritos!")
+botoes_sidebar()
 
 # Estilização em CSS
 st.markdown(
@@ -62,6 +117,11 @@ st.markdown(
             font-size: 18px;
             display: inline-flex;
             align-items: center;
+        }
+        nav a img {
+            width: 16px; /* Tamanho da imagem de lupa ajustado */
+            height: auto;
+            vertical-align: middle;
         }
         .intro {
             text-align: center;
@@ -122,12 +182,6 @@ st.markdown(
         <div class="logo">
             <a href="/"><img src="img/logo.png" alt="logo"></a>
         </div>
-        <nav>
-            <a href="#">Favoritos</a>
-            <a href="#">Recentes</a>
-            <a href="#">Configurações</a>
-            <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/64/64673.png" alt="Buscar"></a>
-        </nav>
     </header>
     <main>
         <section class="intro">
@@ -142,7 +196,7 @@ st.markdown(
 )
 
 # Exibir cards dos locais populares
-locais = ["Big Big", "Shopping Vila Olímpia", "Pão de açucar"]
+locais = ["Restaurante A", "Shopping B", "Supermercado C"]
 for local in locais:
     with st.container():
         st.markdown(
@@ -156,7 +210,7 @@ for local in locais:
         )
         
         # Determinar o símbolo da estrela (favoritado ou não)
-        if local in favoritos:
+        if local in st.session_state["favoritos"]:
             estrela = "⭐ Remover dos favoritos"
         else:
             estrela = "☆ Adicionar aos favoritos"
@@ -176,7 +230,7 @@ st.markdown(
 
 # Exibir favoritos ao final da página
 if st.button("Ver Favoritos"):
-    if favoritos:
-        st.write("Favoritos:", favoritos)
+    if st.session_state["favoritos"]:
+        st.write("Favoritos:", st.session_state["favoritos"])
     else:
         st.write("Nenhum local adicionado aos favoritos.")

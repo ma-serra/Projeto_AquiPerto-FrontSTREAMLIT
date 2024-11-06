@@ -67,17 +67,5 @@
         </form>
         <div class="message" id="message"></div>
     </div>
-{% comment %} 
-    <script>
-        function handleSubmit(event) {
-            event.preventDefault(); // Impede o comportamento padrão do formulário
-            const email = document.getElementById('email').value;
-            const senha = document.getElementById('senha').value;
-
-            // Envia os dados para o Streamlit
-            const data = {email: email, senha: senha};
-            Streamlit.setComponentValue(data);
-        }
-    </script> {% endcomment %}
 </body>
 </html>

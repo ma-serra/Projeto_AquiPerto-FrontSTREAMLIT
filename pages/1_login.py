@@ -1,10 +1,13 @@
 import streamlit as st
 import requests
+import os
 
 # URL do backend Flask
-API_URL = "http://localhost:5000"  # Altere para o endereço correto do seu backend
+API_URL = "http://localhost:5000"
 
-st.logo(image="img/logo.png", size="large")
+# Exibir o logo
+if os.path.exists("img/logo.png"):
+    st.image("img/logo.png", width=200)
 
 st.title("Login")
 
@@ -20,6 +23,8 @@ if st.button("Entrar"):
                 st.success("Login realizado com sucesso!")
                 st.session_state['logged_in'] = True
                 st.session_state['user_email'] = email
+                # Redirecionar para a página Home
+                st.markdown("<meta http-equiv='refresh' content='0; url=/' />", unsafe_allow_html=True)
             else:
                 error_message = response.json().get('erro', 'Erro desconhecido.')
                 st.error(f"Erro no login: {error_message}")
@@ -30,9 +35,5 @@ if st.button("Entrar"):
 
 # Área após login
 if 'logged_in' in st.session_state and st.session_state['logged_in']:
-    st.switch_page("home.py")
-
-# st.sidebar.success(f"Logado como: {st.session_state['user_email']}")
-# if st.button("Sair"):
-#     st.session_state.clear()
-#     st.experimental_rerun()
+    # Usuário já está logado, redirecionar para a Home
+    st.markdown("<meta http-equiv='refresh' content='0; url=/' />", unsafe_allow_html=True)

@@ -1,14 +1,13 @@
 import streamlit as st
 import requests
+from time import sleep
 
-# URL do backend Flask (sem o endpoint específico)
 API_URL = "http://localhost:5000"
 
 st.title("Aplicativo de Cadastro")
 
 st.subheader("Cadastro")
 
-# Campos do formulário de cadastro
 nome = st.text_input("Nome Completo")
 email = st.text_input("Email")
 senha = st.text_input("Senha", type='password')
@@ -26,12 +25,10 @@ if st.button("Cadastrar"):
                 'confirmar_senha': confirmar_senha
             }
             try:
-                # Envia a requisição POST para o endpoint correto
                 response = requests.post(f"{API_URL}/usuarios", json=data)
                 if response.status_code == 201:
                     st.success("Cadastro realizado com sucesso! Por favor, faça login.")
                     st.session_state['logou'] = True
-                    # Redirecionar para a página de login ??????????????????????????????????????
                 elif response.status_code == 409:
                     error_message = response.json().get('erro', 'Email já cadastrado.')
                     st.error(f"Erro no cadastro: {error_message}")
@@ -48,7 +45,6 @@ if st.button("Cadastrar"):
     else:
         st.warning("Por favor, preencha todos os campos.")
 
-# Área após cadastro ??????????????????????????????????????
-
 if 'logou' in st.session_state and st.session_state['logou']:
+    sleep(1.3)
     st.switch_page('pages/1_login.py')
