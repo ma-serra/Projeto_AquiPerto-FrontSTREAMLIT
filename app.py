@@ -4,40 +4,48 @@ import streamlit as st
 from utils import initialize_session
 from pages.login import login_page
 from pages.cadastro import cadastro_page
-from pages.home import home_page  # Import the home_page function
+from pages.home import home_page
+from pages.servicos import servicos_page
+# Importar outras páginas conforme necessário
 
 def main():
-    # Initialize session state
-    initialize_session()
-
-    # Page configuration
+    # Configuração da página (deve ser o primeiro comando Streamlit)
     st.set_page_config(page_title="Aqui Perto", page_icon="🏠", layout="centered")
 
-    # Initialize the current page in session_state
-    if 'page' not in st.session_state:
-        st.session_state.page = 'inicio'  # Start at the 'inicio' page
+    # Inicialização do estado de sessão
+    initialize_session()
 
-    # Sidebar with navigation buttons
+    # Inicializa a página atual no session_state
+    if 'page' not in st.session_state:
+        st.session_state.page = 'inicio'
+
+    # Adiciona botões de navegação na sidebar
     with st.sidebar:
         st.title("Menu de Navegação")
 
-        # If user is not logged in, show Login and Cadastro buttons
+        # Se o usuário não estiver logado, mostrar opções de Login e Cadastro
         if st.session_state.user_email is None:
-            if st.button("Login"):
+            if st.button("Login", key="sidebar_login"):
                 st.session_state.page = 'login'
-            if st.button("Cadastro"):
+                st.rerun()
+            if st.button("Cadastro", key="sidebar_cadastro"):
                 st.session_state.page = 'cadastro'
+                st.rerun()
         else:
-            # If user is logged in, show Logout button and navigation to Home
+            # Se o usuário estiver logado, mostrar opções de navegação e Logout
             st.write(f"Usuário: {st.session_state.user_email}")
-            if st.button("Home"):
+            if st.button("Home", key="sidebar_home"):
                 st.session_state.page = 'home'
-            if st.button("Logout"):
+                st.rerun()
+            if st.button("Serviços", key="sidebar_servicos"):
+                st.session_state.page = 'servicos'
+                st.rerun()
+            if st.button("Logout", key="sidebar_logout"):
                 st.session_state.user_email = None
                 st.session_state.page = 'inicio'
-                st.rerun()  # Reload the app to update the page
+                st.rerun()
 
-    # Display content based on the current page
+    # Condicional para exibir conteúdo baseado na página atual
     if st.session_state.page == "inicio":
         st.title("Bem-vindo ao Aqui Perto")
         st.write("Selecione uma opção no menu lateral.")
@@ -47,6 +55,9 @@ def main():
         cadastro_page()
     elif st.session_state.page == "home":
         home_page()
+    elif st.session_state.page == "servicos":
+        servicos_page()
+    # Incluir outras páginas conforme necessário
     else:
         st.error("Página não encontrada.")
         st.session_state.page = 'inicio'

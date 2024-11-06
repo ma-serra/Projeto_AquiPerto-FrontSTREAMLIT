@@ -40,67 +40,6 @@ def home_page():
                 unsafe_allow_html=True
             )
 
-    def botoes_sidebar():
-        # CSS styling for buttons and section titles
-        st.sidebar.markdown("""
-        <style>
-        /* Style for section titles */
-        .section-title {
-            font-size: 18px;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            color: #333333;
-            font-weight: bold;
-        }
-
-        /* Style for sidebar buttons */
-        .sidebar-button {
-            display: block;
-            width: 100%;
-            height: 40px;
-            line-height: 40px;
-            font-size: 16px;
-            font-family: sans-serif;
-            text-decoration: none;
-            color: #333;
-            border: 2px solid #333;
-            letter-spacing: 1px;
-            text-align: center;
-            position: relative;
-            transition: all 0.35s;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            background-color: transparent;
-        }
-
-        .sidebar-button:hover {
-            color: #fff;
-            background-color: #333;
-        }
-        </style>
-        """, unsafe_allow_html=True)
-
-        # First section: Account (Logout)
-        st.sidebar.markdown("<div class='section-title'>Conta</div>", unsafe_allow_html=True)
-        if st.sidebar.button("Logout", key="logout_button"):
-            st.session_state.user_email = None
-            st.session_state.page = 'inicio'
-            st.experimental_rerun()  # Reload the app
-
-        # Second section: Navigation (Serviços, Favoritos, Mapa)
-        st.sidebar.markdown("<div class='section-title'>Navegação</div>", unsafe_allow_html=True)
-        if st.sidebar.button("Serviços"):
-            st.session_state.page = 'servicos'
-            st.experimental_rerun()
-        if st.sidebar.button("Favoritos"):
-            st.session_state.page = 'favoritos'
-            st.experimental_rerun()
-        if st.sidebar.button("Mapa"):
-            st.session_state.page = 'mapa'
-            st.experimental_rerun()
-
-    botoes_sidebar()
-
     # Display welcome message with user's email
     st.write(f"Bem-vindo, {st.session_state.get('user_email', 'usuário')}!")
 
