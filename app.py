@@ -6,6 +6,7 @@ from pages.home import home_page
 from pages.servicos import servicos_page
 from pages.mapa import mapa_page
 from pages.favoritos import favoritos_page
+from pages.cadastrarlocal import cadastrar_local_page
 
 def main():
     st.set_page_config(page_title="Aqui Perto", page_icon="🏠", layout="centered")
@@ -63,6 +64,9 @@ def main():
             if st.button("Favoritos", key="sidebar_favoritos"):
                 st.session_state.page = 'favoritos'
                 st.rerun()
+            if st.button("Cadastrar Local", key="sidebar_cadastrarlocal"):
+                st.session_state.page = 'cadastrar_local'
+                st.rerun()
             if st.button("Logout", key="sidebar_logout"):
                 st.session_state.user_email = None
                 st.session_state.page = 'inicio'
@@ -95,6 +99,8 @@ def main():
     elif st.session_state.page == "favoritos":
         exibir_logo()
         favoritos_page()
+    elif st.session_state.page == "cadastrar_local":
+        cadastrar_local_page()
     else:
         exibir_logo()
         st.error("Página não encontrada.")
