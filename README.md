@@ -1,1 +1,3 @@
 # Projeto_AquiPerto-Front
+
+Aqui Perto é uma aplicação web que permite aos usuários encontrar e gerenciar locais próximos, como supermercados, farmácias, shoppings centers, estacionamentos e restaurantes. Com funcionalidades de login, cadastro, visualização de mapas interativos e gerenciamento de favoritos, a plataforma oferece uma experiência completa para descobrir e salvar os melhores locais na sua região.
