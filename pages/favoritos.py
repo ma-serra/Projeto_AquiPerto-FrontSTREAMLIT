@@ -13,7 +13,7 @@ def favoritos_page():
         return
 
     def carregar_favoritos():
-        api_url = f"http://127.0.0.1:5000/favoritos/{st.session_state.user_email}"
+        api_url = f"https://projeto-aquipertorender.onrender.com/favoritos/{st.session_state.user_email}"
         try:
             response = requests.get(api_url)
             response.raise_for_status()
@@ -23,7 +23,7 @@ def favoritos_page():
             return []
 
     def remover_favorito(id_local):
-        api_url = f"http://127.0.0.1:5000/favoritos/{st.session_state.user_email}/remover"
+        api_url = f"https://projeto-aquipertorender.onrender.com/favoritos/{st.session_state.user_email}/remover"
         payload = {"id_local": id_local}
         try:
             response = requests.post(api_url, json=payload)

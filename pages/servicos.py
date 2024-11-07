@@ -16,7 +16,7 @@ def servicos_page():
     
     # Função para carregar os dados dos locais
     def carregar_dados():
-        api_url = "http://127.0.0.1:5000/locais"
+        api_url = "https://projeto-aquipertorender.onrender.com/locais"
         try:
             response = requests.get(api_url)
             response.raise_for_status()
@@ -27,7 +27,7 @@ def servicos_page():
 
     # Função para carregar os favoritos do usuário
     def carregar_favoritos():
-        api_url = f"http://127.0.0.1:5000/favoritos/{st.session_state.user_email}"
+        api_url = f"https://projeto-aquipertorender.onrender.com/favoritos/{st.session_state.user_email}"
         try:
             response = requests.get(api_url)
             response.raise_for_status()
@@ -40,7 +40,7 @@ def servicos_page():
 
     # Função para adicionar um local aos favoritos
     def adicionar_favorito(id_local):
-        api_url = f"http://127.0.0.1:5000/favoritos/{st.session_state.user_email}/adicionar"
+        api_url = f"https://projeto-aquipertorender.onrender.com/favoritos/{st.session_state.user_email}/adicionar"
         payload = {"id_local": id_local}
         try:
             response = requests.post(api_url, json=payload)
@@ -51,7 +51,7 @@ def servicos_page():
 
     # Função para remover um local dos favoritos
     def remover_favorito(id_local):
-        api_url = f"http://127.0.0.1:5000/favoritos/{st.session_state.user_email}/remover"
+        api_url = f"https://projeto-aquipertorender.onrender.com/favoritos/{st.session_state.user_email}/remover"
         payload = {"id_local": id_local}
         try:
             response = requests.post(api_url, json=payload)

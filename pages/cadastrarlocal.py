@@ -48,7 +48,7 @@ def cadastrar_local_page():
             }
 
             try:
-                response = requests.post("http://localhost:5000/locais", json=data)
+                response = requests.post("https://projeto-aquipertorender.onrender.com/locais", json=data)
                 if response.status_code == 201:
                     st.success("Local cadastrado com sucesso!")
                     st.session_state.page = 'servicos'

@@ -15,7 +15,7 @@ def login_page():
         if email and senha:
             data = {'email': email, 'senha': senha}
             try:
-                response = requests.post("http://localhost:5000/login", json=data)
+                response = requests.post("https://projeto-aquipertorender.onrender.com/login", json=data)
                 if response.status_code == 200:
                     st.success("Login realizado com sucesso!")
                     st.session_state['user_email'] = email

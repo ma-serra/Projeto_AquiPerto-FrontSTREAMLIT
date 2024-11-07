@@ -16,7 +16,7 @@ def cadastro_page():
         if nome and email and senha:
             data = {'nome': nome, 'email': email, 'senha': senha}
             try:
-                response = requests.post("http://localhost:5000/usuarios", json=data)
+                response = requests.post("https://projeto-aquipertorender.onrender.com/usuarios", json=data)
                 if response.status_code == 201:
                     st.success("Cadastro realizado com sucesso! Você pode agora fazer login.")
                     st.session_state.page = 'login'  # Redireciona para a página de login

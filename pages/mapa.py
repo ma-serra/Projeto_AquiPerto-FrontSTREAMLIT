@@ -16,7 +16,7 @@ def mapa_page():
         st.rerun()
         return
 
-    api_url = "http://127.0.0.1:5000/locais"
+    api_url = "https://projeto-aquipertorender.onrender.com/locais"
 
     response = requests.get(api_url)
     markers_data = response.json()
